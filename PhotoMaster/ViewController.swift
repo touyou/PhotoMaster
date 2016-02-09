@@ -18,6 +18,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    // ユーザーの選択に応じた画像選択画面を表示
     func precentPickerController(sourceType: UIImagePickerControllerSourceType) {
         let picker = UIImagePickerController()
         picker.sourceType = sourceType
@@ -25,11 +26,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    // おそらくギャラリーから選択の時に使われている
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         self.dismissViewControllerAnimated(true, completion: nil)
         photoImageView.image = image
     }
     
+    // アラートでどこから画像を取得するか
     @IBAction func selectButtonTapped(sender: UIButton) {
         let alertController = UIAlertController(title: "画像の取得先を選択", message: nil, preferredStyle: .ActionSheet)
         let firstAction = UIAlertAction(title: "カメラ", style: .Default) {
@@ -48,6 +51,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // 文字列の合成
     func drawText(image: UIImage) -> UIImage {
         let text = "Life is Tech!\nXmasCamp2015💖"
         UIGraphicsBeginImageContext(image.size)
@@ -64,6 +68,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         return newImage
     }
     
+    // 画像の合成、素材画像がないため実行不可
     func drawMaskImage(image: UIImage) -> UIImage {
         UIGraphicsBeginImageContext(image.size)
         image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
@@ -81,6 +86,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         return newImage
     }
     
+    // 単純なアラートをつくる関数
     func simpleAlert(titleString: String) {
         let alertController = UIAlertController(title: titleString, message: nil, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -88,6 +94,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // なにを合成するか、サンタマークはないのでかわりにシンプルアラートを出しておく
     @IBAction func processButtonTapped(sender: UIButton) {
         guard let selectedPhoto = photoImageView.image else {
             simpleAlert("画像がありません")
@@ -110,6 +117,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // SNSに投稿する時のフォーマット
     func postToSNS(serviceType: String) {
         let myComposeView = SLComposeViewController(forServiceType: serviceType)
         myComposeView.setInitialText("PhotoMasterからの投稿✨")
@@ -117,6 +125,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         self.presentViewController(myComposeView, animated: true, completion: nil)
     }
     
+    // どのSNSに投稿するか
     @IBAction func uploadButtonTapped(sender: UIButton) {
         guard let selectedPhoto = photoImageView.image else {
             simpleAlert("画像がありません")
